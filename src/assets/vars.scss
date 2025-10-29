@@ -1,0 +1,53 @@
+:root {
+    --text: #fff;
+    --t-10: rgba(var(--t-color-rgb), 0.1);
+    --ct-10: rgba(var(--ct-color-rgb), 0.1);
+    --t-20: rgba(var(--t-color-rgb), 0.2);
+    --ct-20: rgba(var(--ct-color-rgb), 0.2);
+    --t-30: rgba(var(--t-color-rgb), 0.3);
+    --ct-30: rgba(var(--ct-color-rgb), 0.3);
+    --t-40: rgba(var(--t-color-rgb), 0.4);
+    --ct-40: rgba(var(--ct-color-rgb), 0.4);
+    --t-50: rgba(var(--t-color-rgb), 0.5);
+    --ct-50: rgba(var(--ct-color-rgb), 0.5);
+    --t-60: rgba(var(--t-color-rgb), 0.6);
+    --ct-60: rgba(var(--ct-color-rgb), 0.6);
+    --t-70: rgba(var(--t-color-rgb), 0.7);
+    --ct-70: rgba(var(--ct-color-rgb), 0.7);
+    --t-80: rgba(var(--t-color-rgb), 0.8);
+    --ct-80: rgba(var(--ct-color-rgb), 0.8);
+    --t-90: rgba(var(--t-color-rgb), 0.9);
+    --ct-90: rgba(var(--ct-color-rgb), 0.9);
+
+    --primary: 0, 0, 0;
+    --primary-10: rgba(var(--primary), 0.1);
+    --primary-20: rgba(var(--primary), 0.2);
+    --primary-30: rgba(var(--primary), 0.3);
+    --primary-40: rgba(var(--primary), 0.4);
+    --primary-50: rgba(var(--primary), 0.5);
+    --primary-60: rgba(var(--primary), 0.6);
+    --primary-70: rgba(var(--primary), 0.7);
+    --primary-80: rgba(var(--primary), 0.8);
+    --primary-90: rgba(var(--primary), 0.9);
+
+    --secondary: 255, 255, 255;
+    --secondary-10: rgba(var(--secondary), 0.1);
+    --secondary-20: rgba(var(--secondary), 0.2);
+    --secondary-30: rgba(var(--secondary), 0.3);
+    --secondary-40: rgba(var(--secondary), 0.4);
+    --secondary-50: rgba(var(--secondary), 0.5);
+    --secondary-60: rgba(var(--secondary), 0.6);
+    --secondary-70: rgba(var(--secondary), 0.7);
+    --secondary-80: rgba(var(--secondary), 0.8);
+    --secondary-90: rgba(var(--secondary), 0.9);
+}
+
+:root {
+    --players-card-width: 140px;
+    --players-card-height: 160px;
+
+
+    --safezone: 15px;
+    --safezone-x: var(--safezone);
+    --safezone-y: var(--safezone);
+}
