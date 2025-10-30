@@ -42,14 +42,16 @@
     width: 100%;
     height: 30px;
     gap: 0px;
+    z-index: 0;
 
     position: absolute;
-    top: -35px;
+    top: -40px;
     left: 0;
 
-    background: var(--primary-50);
-    border: 1px solid white;
+    background: var(--primary-70);
+    border: 1px solid var(--secondary-80);
     border-radius: var(--border-radius);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
     transition: all 0.3s ease-in-out;
 

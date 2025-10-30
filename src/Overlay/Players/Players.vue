@@ -13,6 +13,12 @@
             <img v-if="player.state.health <= 0" class='dead-icon' src='./death.png' alt='dead-icon' />
             <PlayerHealthBar :player="player" />
             <PlayerStastics :player="player" />
+            <img :class="['def-and-c4', player.team.side]"
+                v-if="player.state.defusekit && !['freezetime', 'timeout', 'timeout_ct', 'timeout_t'].includes(phase.phase || '')"
+                src="./defuse.png" alt="">
+            <img :class="['def-and-c4', player.team.side]"
+                v-if="player.bomb && !['freezetime', 'timeout', 'timeout_ct', 'timeout_t'].includes(phase.phase || '')"
+                src="./c4.png" alt="">
         </div>
         <PlayerWeapons :player="player" />
         <PlayerAdditional :player="player" :map="map" :phase="phase" />
@@ -44,6 +50,7 @@
         position: relative;
         background: var(--primary-60);
         transition: height 0.3s ease-in-out;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
 
         .dead-icon {
             position: absolute;
@@ -82,11 +89,30 @@
                 width: 18px;
                 height: 18px;
             }
+
+        }
+
+        .def-and-c4 {
+            position: absolute;
+            top: -30px;
+            height: 24px;
+            z-index: 2;
+            padding: 3px 6px;
+
+            &.CT {
+                left: 0;
+                background: var(--ct-30);
+            }
+
+            &.T {
+                right: 0;
+                background: var(--t-30);
+            }
         }
     }
 
     &.focused {
-        box-shadow: 0 0 0px 2px white;
+        box-shadow: 0 0 0px 3px white;
     }
 
     &.CT {

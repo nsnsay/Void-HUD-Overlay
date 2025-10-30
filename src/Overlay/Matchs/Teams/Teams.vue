@@ -18,8 +18,8 @@
     flex-direction: row;
     width: 300px;
     height: 100%;
-    background: var(--secondary-90);
-    color: black;
+    background: var(--primary-90);
+    color: white;
     padding: 12px;
     position: relative;
 
@@ -31,14 +31,46 @@
         .team-name {
             justify-content: flex-start;
         }
+
+        .team-logo {
+            &::after {
+                content: '';
+                position: absolute;
+                top: 10%;
+                bottom: 10%;
+                left: 0;
+                right: 0;
+                transform: translateX(-10px);
+                border-left: 2px solid var(--t-70);
+            }
+        }
     }
 
     &.CT {
         border-left: 8px solid var(--ct-color);
+
+        .team-logo {
+            &::after {
+                content: '';
+                position: absolute;
+                top: 10%;
+                bottom: 10%;
+                left: 0;
+                right: 0;
+                transform: translateX(10px);
+                border-right: 2px solid var(--ct-70);
+            }
+        }
     }
 
     .team-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        flex-shrink: 1;
         height: 40px;
+        position: relative;
 
         img {
             height: 100%;
@@ -55,13 +87,13 @@
         font-size: 1.2rem;
         font-weight: 800;
         padding: 12px;
+        margin-top: 8px;
     }
 
     .team-score {
         font-size: 1.4rem;
         font-weight: 800;
         padding: 12px;
-        color: black;
     }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <Transition name="fade">
-        <div v-if="matchObj && props.data.phase_countdowns.phase !== 'over' && props.data.phase_countdowns.phase !== 'live'"
+        <div v-if="matchObj && props.data.phase_countdowns.phase !== 'over' && props.data.phase_countdowns.phase !== 'live' && props.data.phase_countdowns.phase !== 'bomb' && props.data.phase_countdowns.phase !== 'defuse'"
             class="match-wrap">
             <div v-for="(map, index) in matchMaps" :key="index"
                 :class="['match-item', { 'currentMap': data.map.name === map.name }]">
@@ -57,7 +57,7 @@
         position: relative;
         border: 1px solid var(--secondary-50);
         gap: 6px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 
         &.currentMap {
             border: 2px solid var(--secondary-90);

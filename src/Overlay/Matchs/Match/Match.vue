@@ -1,7 +1,10 @@
 <template>
     <div class="match-wrap">
         <div class="match-round">Round {{ map.round + 1 }}</div>
-        <div class="match-time">{{ secondToTime(Number(phase.phase_ends_in)) }}</div>
+        <div v-if="phase.phase !== 'bomb' && phase.phase !== 'timeout_ct' && phase.phase !== 'timeout_t' && phase.phase !== 'paused'"
+            class="match-time">{{ secondToTime(Number(phase.phase_ends_in)) }}</div>
+        <div v-else-if="phase.phase === 'bomb'" class="match-time bomb">SITE {{ bomb.site }}</div>
+        <div v-else class="match-time paused">PAUSED</div>
     </div>
 </template>
 
@@ -12,9 +15,9 @@
     justify-content: center;
     flex-direction: column;
     gap: 6px;
-    width: 100px;
+    width: 90px;
     height: 100%;
-    background: var(--primary-50);
+    background: var(--primary-90);
     color: white;
 
     .match-round {
@@ -25,12 +28,22 @@
     .match-time {
         font-weight: 800;
         font-size: 20px;
+
+        &.bomb {
+            font-size: 16px;
+        }
+
+        &.paused {
+            font-size: 14px;
+        }
+
+        margin-bottom: 3px;
     }
 }
 </style>
 
 <script setup lang="ts">
-import type { Map, PhaseRaw } from '@/csgo-extended'
+import type { Map, PhaseRaw, Bomb } from '@/csgo-extended'
 const props = defineProps({
     phase: {
         type: Object as () => PhaseRaw,
@@ -38,6 +51,10 @@ const props = defineProps({
     },
     map: {
         type: Object as () => Map,
+        default: () => ({})
+    },
+    bomb: {
+        type: Object as () => Bomb,
         default: () => ({})
     }
 })

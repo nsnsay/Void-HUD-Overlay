@@ -2,7 +2,8 @@
     <div class="matchs-wrap">
         <Teams v-if="data.map.team_ct" :team="data.map.team_ct" :map="data.map" :phase="data.phase_countdowns as any"
             :bomb="data.bomb ?? undefined" :match="data.match" />
-        <Match v-if="data.map.team_ct" :phase="data.phase_countdowns as any" :map="data.map" />
+        <Match v-if="data.map.team_ct" :phase="data.phase_countdowns as any" :map="data.map"
+            :bomb="data.bomb ?? undefined" />
         <Teams v-if="data.map.team_t" :team="data.map.team_t" :map="data.map" :phase="data.phase_countdowns as any"
             :bomb="data.bomb ?? undefined" :match="data.match" />
     </div>
@@ -18,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    outline: 1px solid var(--secondary-50);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 </style>
 

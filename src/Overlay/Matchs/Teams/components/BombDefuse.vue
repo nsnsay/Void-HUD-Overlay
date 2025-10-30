@@ -50,8 +50,11 @@
 
         .progress-bar {
             height: 100%;
+            width: 100%;
             z-index: 0;
-            transition: width 0.01s;
+            transform-origin: left center;
+            transition: transform 0.1s ease-in-out;
+            will-change: transform;
         }
     }
 
@@ -155,8 +158,8 @@ const timeoutEndsIn = computed(() => {
     return Math.max(0, Math.min(progressMaxSeconds.value, v))
 })
 const timeoutSeconds = computed(() => Math.ceil(timeoutEndsIn.value))
-const progressPercent = computed(() => {
-    return +((timeoutEndsIn.value / progressMaxSeconds.value) * 100).toFixed(2)
+const progressRatio = computed(() => {
+    return +((timeoutEndsIn.value / progressMaxSeconds.value).toFixed(4))
 })
-const progressBarStyle = computed(() => ({ width: `${progressPercent.value}%` }))
+const progressBarStyle = computed(() => ({ transform: `scaleX(${progressRatio.value})` }))
 </script>

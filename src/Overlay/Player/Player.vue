@@ -10,7 +10,7 @@
                 <img v-else-if="player.state.armor" :src="ArmorFull" alt="armor" />
             </div>
         </div>
-        <div class="player-name">{{ player.name }}</div>
+        <div class="player-name">{{ player.infos?.name || player.name }}</div>
         <div class="player-ammo">
             <img src="./bullets.png" alt="">
             <div class="clip">{{ player.active_weapon?.ammo_clip }}</div>
@@ -50,14 +50,14 @@
         justify-content: center;
         flex-direction: row-reverse;
         width: 60px;
-        gap: 0;
+        gap: 2px;
 
         .health {
             display: flex;
             align-items: center;
             line-height: 13px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 800;
             width: 30px;
         }
 
@@ -74,7 +74,7 @@
         justify-content: center;
         color: var(--text);
         height: 32px;
-        font-weight: 800;
+        font-weight: 900;
         border-radius: var(--border-radius);
         flex-shrink: 1;
         flex-grow: 1;

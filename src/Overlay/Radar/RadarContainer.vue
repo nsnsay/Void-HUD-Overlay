@@ -1,8 +1,6 @@
 <template>
     <div class="radar-container">
-        <transition name="fade">
-            <SeriesName v-if="data.phase_countdowns.phase === 'live'" :settings="data.settings" />
-        </transition>
+        <SeriesName v-if="data.settings" :settings="data.settings" />
         <div class="map-container" :style="containerStyle">
             <template v-if="isSupportedMap">
                 <div class="map" :style="mapStyle">

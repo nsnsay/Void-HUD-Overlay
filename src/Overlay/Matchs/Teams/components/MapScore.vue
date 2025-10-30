@@ -10,7 +10,7 @@
 .map-score-wrap {
     position: absolute;
     left: 50%;
-    bottom: 0;
+    top: 10px;
     transform: translateX(-50%);
     z-index: 3;
 
@@ -24,9 +24,9 @@
     }
 
     .map-score-item {
-        width: 42px;
-        height: 8px;
-        background: var(--primary-30);
+        width: 36px;
+        height: 6px;
+        background: var(--secondary-20);
         position: relative;
         overflow: hidden;
         transition: transform 0.2s ease, background 0.2s ease;
@@ -80,10 +80,14 @@ const slotCount = computed<number>(() => {
     switch (seriesType.value) {
         case 'BO1': return 1
         case 'BO2': return 2
-        case 'BO3': return 2 // 按需求显示2个
+        case 'BO3': return 2
         case 'BO4': return 3
         case 'BO5': return 3
-        default: return Array.isArray(matchObj.value?.maps) ? matchObj.value.maps.length : 1
+        default: {
+            const len = Array.isArray(matchObj.value?.maps) ? matchObj.value!.maps.length : 1
+            // 未知系列类型时，按“赢半数+1”计算需要赢的场数
+            return Math.max(1, Math.ceil(len / 2))
+        }
     }
 })
 
@@ -93,48 +97,40 @@ function normalizeScore(s: unknown): number {
     return Number.isFinite(n) ? n : 0
 }
 
-const displayItems = computed(() => {
+// 统计当前队伍在全部地图中的胜场总数，并限制为系列需要的赢场数
+const winsCountAll = computed(() => {
     const maps: any[] = Array.isArray(matchObj.value?.maps) ? matchObj.value!.maps : []
     const teamId = Number((props.team as any)?.infos?.id ?? (props.team as any)?.id)
-    const count = Math.min(slotCount.value, maps.length)
-    const items = [] as Array<{ name: string, aScore: number, bScore: number, isWin: boolean, isDecider: boolean }>
-
-    for (let i = 0; i < count; i++) {
+    let wins = 0
+    for (let i = 0; i < maps.length; i++) {
         const mp = maps[i] ?? {}
-        const name = String(mp?.name ?? `Map ${i + 1}`)
         const aId = Number(mp?.aid ?? mp?.team_a?.id)
         const bId = Number(mp?.bid ?? mp?.team_b?.id)
         const aScore = normalizeScore(mp?.ascore ?? mp?.team_a?.score)
         const bScore = normalizeScore(mp?.bscore ?? mp?.team_b?.score)
-
-        let winnerId: number | null = null
-        if (aScore !== bScore) {
-            winnerId = aScore > bScore ? aId : bId
-        }
-
-        const isWin = (winnerId !== null) && (Number.isFinite(teamId)) && (winnerId === teamId)
-        const isDecider = i === count - 1
-
-        items.push({ name, aScore, bScore, isWin, isDecider })
+        if (!Number.isFinite(aScore) || !Number.isFinite(bScore)) continue
+        if (aScore === bScore) continue
+        const winnerId = aScore > bScore ? aId : bId
+        if (Number.isFinite(teamId) && winnerId === teamId) wins++
     }
-    return items
+    return Math.min(wins, slotCount.value)
 })
 
 // 压缩显示：把获胜条聚拢到左侧，避免中间出现空隙
 const compressedItems = computed((): Array<{ name: string, aScore: number, bScore: number, isWin: boolean, isDecider: boolean }> => {
-    const base = displayItems.value
-    const count = base.length
-    const winsCount = base.filter(i => i.isWin).length
+    const count = slotCount.value
+    const winsCount = winsCountAll.value
+    const maps: any[] = Array.isArray(matchObj.value?.maps) ? matchObj.value!.maps : []
+    const hasDecider = maps.some(m => Boolean(m?.decider))
     const result: Array<{ name: string, aScore: number, bScore: number, isWin: boolean, isDecider: boolean }> = []
 
     for (let i = 0; i < count; i++) {
-        const src = base[i]
         result.push({
-            name: src?.name ?? `Map ${i + 1}`,
-            aScore: src?.aScore ?? 0,
-            bScore: src?.bScore ?? 0,
+            name: `Slot ${i + 1}`,
+            aScore: 0,
+            bScore: 0,
             isWin: i < winsCount,
-            isDecider: i === count - 1,
+            isDecider: hasDecider && winsCount < count && i === count - 1,
         })
     }
     return result
